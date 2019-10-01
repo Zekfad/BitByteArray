@@ -1,0 +1,28 @@
+{
+	"name": "@zekfad/bitbytearray",
+	"version": "1.0.0",
+	"description": "Array of bits using BitByte.",
+	"engines": {
+		"node": ">=8.16.1"
+	},
+	"main": "BitByteArray.js",
+	"scripts": {
+		"build": "",
+		"test": "mocha"
+	},
+	"keywords": [
+		"bit",
+		"byte",
+		"array"
+	],
+	"author": "Zekfad <zekfad@znnme.ru.eu.org> (https://znnme.ru.eu.org)",
+	"license": "ISC",
+	"repository": "github:Zekfad/BitByte",
+	"devDependencies": {
+		"eslint": "^6.4.0",
+		"mocha": "^6.2.0"
+	},
+	"dependencies": {
+		"@zekfad/bitbyte": "^1.0.5"
+	}
+}

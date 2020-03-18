@@ -1,6 +1,6 @@
 {
 	"name": "@zekfad/bitbytearray",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Array of bits using BitByte.",
 	"engines": {
 		"node": ">=8.16.1"

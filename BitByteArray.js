@@ -43,7 +43,7 @@ class BitByteArray {
 						return this.getBit(i);
 					},
 					set: function (newBit) {
-						return this.setBit(i, newBit);
+						this.setBit(i, newBit);
 					},
 					enumerable  : true,
 					configurable: true,

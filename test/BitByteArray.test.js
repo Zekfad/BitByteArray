@@ -112,9 +112,7 @@ describe('BitByteArray', () => {
 			it('should display requested bit', () => {
 				let bitsArray = new BitByteArray(8);
 
-				bitsArray.assign([
-					0, 1,
-				]);
+				bitsArray.assign([ 0, 1, ]);
 
 				assert.equal(bitsArray[0], 0);
 				assert.equal(bitsArray[1], 1);
@@ -137,9 +135,7 @@ describe('BitByteArray', () => {
 			it('should display requested bit', () => {
 				let bitsArray = new BitByteArray(8);
 
-				bitsArray.assign([
-					0, 1,
-				]);
+				bitsArray.assign([ 0, 1, ]);
 
 				assert.equal(bitsArray.getBit(0), 0);
 				assert.equal(bitsArray.getBit(1), 1);
@@ -270,11 +266,7 @@ describe('BitByteArray', () => {
 
 			it('if any of numbers is not in range of [0,255], it should create BitByteArray with a multiple 32 bit integers', () => {
 				assert.deepEqual(
-					[
-						...BitByteArray.from([
-							-1, -1,
-						]),
-					],
+					[ ...BitByteArray.from([ -1, -1, ]), ],
 					[
 						...[
 							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -288,11 +280,7 @@ describe('BitByteArray', () => {
 
 			it('if every number is in range of [0,255], it should create BitByteArray with a multiple 8 bit integers', () => {
 				assert.deepEqual(
-					[
-						...BitByteArray.from([
-							1, 1,
-						]),
-					],
+					[ ...BitByteArray.from([ 1, 1, ]), ],
 					[
 						...[
 							0, 0, 0, 0, 0, 0, 0, 1,
@@ -310,14 +298,8 @@ describe('BitByteArray', () => {
 
 			it('should create BitByteArray with an provided array as a pure bit source', () => {
 				assert.deepEqual(
-					[
-						...BitByteArray.from([
-							true, true,
-						]),
-					],
-					[
-						1, 1,
-					]
+					[ ...BitByteArray.from([ true, true, ]), ],
+					[ 1, 1, ]
 				);
 			});
 

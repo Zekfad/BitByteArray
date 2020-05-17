@@ -1,28 +1,36 @@
 {
+	"main": "./BitByteArray.js",
 	"name": "@zekfad/bitbytearray",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Array of bits using BitByte.",
-	"engines": {
-		"node": ">=8.16.1"
-	},
-	"main": "BitByteArray.js",
-	"scripts": {
-		"build": "",
-		"test": "mocha"
-	},
 	"keywords": [
 		"bit",
 		"byte",
 		"array"
 	],
-	"author": "Zekfad <zekfad@znnme.ru.eu.org> (https://znnme.ru.eu.org)",
+	"homepage": "https://github.com/Zekfad/BitByteArray",
+	"bugs": {
+		"url": "https://github.com/Zekfad/BitByteArray/issues",
+		"email": "zekfad@znnme.eu.org"
+	},
 	"license": "ISC",
-	"repository": "github:Zekfad/BitByte",
+	"author": "Zekfad <zekfad@znnme.eu.org> (https://znnme.eu.org)",
+	"repository": "github:Zekfad/BitByteArray",
+	"scripts": {
+		"lint": "eslint . --ext .js,.mjs,.cjs",
+		"test": "mocha"
+	},
 	"devDependencies": {
-		"eslint": "^6.4.0",
-		"mocha": "^6.2.0"
+		"@babel/core": "^7.9.6",
+		"babel-eslint": "^10.1.0",
+		"eslint": "^7.0.0",
+		"eslint-plugin-import": "^2.20.2",
+		"mocha": "^7.1.2"
 	},
 	"dependencies": {
-		"@zekfad/bitbyte": "^1.0.5"
+		"@zekfad/bitbyte": "^1.0.6"
+	},
+	"engines": {
+		"node": ">=12 || ~10"
 	}
 }

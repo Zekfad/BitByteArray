@@ -1,6 +1,6 @@
 # BitByteArray
 
-[![npm version](https://img.shields.io/npm/v/@zekfad/bitbytearray?style=for-the-badge)](https://www.npmjs.com/package/@zekfad/bitbytearray)![node version](https://img.shields.io/node/v/@zekfad/bitbytearray?style=for-the-badge)
+[![npm version](https://img.shields.io/npm/v/@zekfad/bitbytearray?style=for-the-badge)](https://www.npmjs.com/package/@zekfad/bitbytearray)![node version](https://img.shields.io/node/v/@zekfad/bitbytearray?style=for-the-badge)[![Build status](https://img.shields.io/travis/Zekfad/BitByteArray?style=for-the-badge)](https://travis-ci.org/github/Zekfad/BitByteArray)
 
 Simple basic bits array for JavaScript.
 

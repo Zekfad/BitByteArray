@@ -34,8 +34,11 @@ class BitByteArray {
 	setLength(length) {
 		if ('[object Number]' !== Object.prototype.toString.call(length))
 			throw new Error('Length must be a number');
+
 		this.setBytes(Math.ceil(length / 8));
-		let actions = this.length > length ? this.length : length;
+		let actions = this.length > length
+			? this.length
+			: length;
 		for (let i = 0; i < actions; i++) {
 			if (i <= length) {
 				Object.defineProperty(this, i, {
@@ -50,6 +53,7 @@ class BitByteArray {
 				});
 			} else delete this[i];
 		}
+		this.bits = length;
 		return length;
 	}
 	/**
@@ -60,11 +64,15 @@ class BitByteArray {
 	setBytes(length) {
 		if ('[object Number]' !== Object.prototype.toString.call(length))
 			throw new Error('Length must be a number');
+
 		for (let i = 0; i < length; i++) {
-			if (i >= this.bytes.length) {
+			if (i >= this.bytes.length)
 				this.bytes[i] = new BitByte();
-			}
 		}
+		/**
+		 * Note: Because `this.bytes` is an Array, scaling down it's
+		 * length will result in drop of unnecessary trails.
+		 */
 		return this.bytes.length = length;
 	}
 	/**
@@ -95,27 +103,17 @@ class BitByteArray {
 	}
 	/**
 	 * Get local storage of bytes as a string.
-	 * @param {string} encoding - Encoding.
 	 * @returns {string} - String representation of bits array.
 	 */
-	toString(encoding = 'ascii') {
-		encoding = encoding.toLowerCase();
-		if ('utf8' === encoding || 'utf-8' === encoding) {
-			let bytes = this.getBytes(),
-				out = [];
+	toString() {
+		let buffer = '',
+			bytes = this.getBytes();
 
-			for (let i = 0; i < bytes.length; i++) {
-				out.push(`%${bytes[i].toString(16)}`);
-			}
-			try {
-				return decodeURIComponent(out.join(''));
-			} catch (error) {
-				return this.toString('ascii');
-			}
+		for (let i = 0; i < bytes.length; i += 2) {
+			buffer += String.fromCharCode(bytes[i] + (bytes[i + 1] << 8));
 		}
-		return this.getBytes()
-			.map(byte => String.fromCharCode(byte))
-			.join('');
+
+		return buffer;
 	}
 	/**
 	 * Assign array of bits to an instance.
@@ -144,6 +142,7 @@ class BitByteArray {
 	}
 	/**
 	 * Check if given offset is acceptable.
+	 * Throws an exception if offset is out of bounds.
 	 * @param {number} offset - Bit offset.
 	 * @returns {boolean} - Returns true if given argument is acceptable.
 	 */
@@ -250,16 +249,11 @@ BitByteArray.from = function (source) {
 			break;
 		case '[object String]':
 			var tempBitsArray = [],
-				bytes = [],
-				uriString = encodeURIComponent(source);
+				bytes = [];
 
-			for (let i = 0; i < uriString.length; i++) {
-				if (uriString[i] !== '%' && uriString[i].charCodeAt(0) <= 255)
-					bytes.push(uriString[i].charCodeAt(0));
-				else {
-					bytes.push(parseInt(uriString[i + 1] + uriString[i + 2], 16));
-					i += 2;
-				}
+			for (let i = 0; i < source.length; i++) {
+				const code = source.charCodeAt(i);
+				bytes.push(code & 255, code >> 8);
 			}
 
 			bytes.forEach(char => {

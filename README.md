@@ -1,8 +1,10 @@
 # BitByteArray
 
-[![npm version](https://img.shields.io/npm/v/@zekfad/bitbytearray?style=for-the-badge)](https://www.npmjs.com/package/@zekfad/bitbytearray)![node version](https://img.shields.io/node/v/@zekfad/bitbytearray?style=for-the-badge)[![Build status](https://img.shields.io/travis/Zekfad/BitByteArray?style=for-the-badge)](https://travis-ci.org/github/Zekfad/BitByteArray)
+[![npm version](https://img.shields.io/npm/v/@zekfad/bitbytearray?style=for-the-badge)](https://www.npmjs.com/package/@zekfad/bitbytearray)![node version](https://img.shields.io/node/v/@zekfad/bitbytearray?style=for-the-badge)[![Build status](https://img.shields.io/travis/Zekfad/BitByteArray?style=for-the-badge)](https://travis-ci.org/github/Zekfad/BitByteArray)[![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Zekfad/BitByteArray?logo=lgtm&style=for-the-badge)](https://lgtm.com/projects/g/Zekfad/BitByteArray/context:javascript)[![Codecov](https://img.shields.io/codecov/c/gh/Zekfad/BitByteArray?style=for-the-badge)](https://codecov.io/gh/Zekfad/BitByteArray)
 
 Simple basic bits array for JavaScript.
+
+> ⚠️ Starting from version 2 all strings are encoded and decoded as UTF-16 (2 bytes per character).
 
 ## Install
 
@@ -27,15 +29,15 @@ Simple array of bits:
 ```js
 const BitByteArray = require('./BitByteArray.js');
 
-const myBitsArray = new BitByteArray(16);
+const myBitsArray = new BitByteArray(32);
 
 console.log([ ...myBitsArray, ]);
 /*
 [
-  0, 0, 0, 0,
-  0, 0, 0, 0,
-  0, 0, 0, 0,
-  0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0
 ]
 */
 
@@ -47,7 +49,7 @@ myBitsArray.assign(
 	[
 		0, 1, 1, 0, 1, 0, 0, 1,
 	],
-	8
+	16,
 );
 
 console.log(myBitsArray.toString()); // Hi
@@ -65,35 +67,34 @@ console.log([ ...myBitsArray, ]);
 /*
 [
   0, 1, 0, 1, 0, 1, 0, 1,
+  0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 0, 1, 0, 1, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 0, 0, 0, 1, 1, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 1, 0, 1, 1, 0, 1,
+  0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 1, 1, 1, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 1, 0, 0, 0, 0, 0,
-  1, 1, 0, 1, 0, 0, 0, 0,
-  1, 0, 1, 0, 0, 0, 0, 1,
-  1, 1, 0, 1, 0, 0, 0, 1,
-  1, 0, 0, 0, 0, 0, 1, 0,
-  1, 1, 0, 1, 0, 0, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0,
-  1, 1, 0, 1,
-  ... 44 more items
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 1, 0,
+  ... 92 more items
 ]
 */
 
-console.log(utf8string === myBitsArray.toString()); // false
-console.log(utf8string === myBitsArray.toString('utf8')); // true
-console.log(myBitsArray.toString('utf8')); // UTF-8 Строка
+console.log(utf8string === myBitsArray.toString()); // true
+console.log(myBitsArray.toString()); // UTF-8 Строка
 
 // Change dash to space
 myBitsArray.assign(
 	[
 		0, 0, 1, 0, 0, 0, 0, 0,
 	],
-	3 * 8
+	3 * 8 * 2 // Skip 3 UTF-16 characters (8 * 2 bits)
 )
 
-console.log(myBitsArray.toString('utf-8')); // UTF 8 Строка
+console.log(myBitsArray.toString()); // UTF 8 Строка
 ```
 
 Array-like access by index:
@@ -157,7 +158,16 @@ Create an array of bits from existing data.
 
 * `source` (`number`|`number[]`|`boolean`|`boolean[]`|`string`) - Source data.
 
-returns `BitByteArray` - Created BitByteArray.
+Returns `BitByteArray` - Created BitByteArray.
+
+
+#### `BitByteArray.projectBitsArray(source)`
+
+Create an array of ones and zeros from existing data.
+
+* `source` (`Array`) - Source data.
+
+Returns `Array` - Normalized array, ready to use with `.from()`.
 
 
 #### `new BitByteArray(length)`
